@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="files/sunglasses.ico" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiffany Isemann's 50th</title>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Tiffany Isemann's 50th Birthday Party" />
+  <meta property="og:description" content="Join us for Breakfast with Tiffany – costumes encouraged!" />
+  <meta property="og:image" content="https://the-game-bureau.github.io/tiffs50/files/sunglasses.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://the-game-bureau.github.io/tiffs50/index.html" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tiffany Isemann's 50th Birthday Party" />
+  <meta name="twitter:description" content="Join us for Breakfast with Tiffany – costumes encouraged!" />
+  <meta name="twitter:image" content="https://the-game-bureau.github.io/tiffs50/files/sunglasses.png" />
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;700&family=Bebas+Neue&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --tiffany-blue: #0abab5;
+      --tiffany-light: #7bf2da;
+      --black: #000000;
+      --white: #ffffff;
+      --gold: #f0b23e;
+      --blush: #f5c8c5;
+      --charcoal: #333333;
+      --cream: #fdf1df;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--black);
+      font-family: 'Playfair Display', serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: var(--black);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .poster {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .rsvp-button {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 1rem;
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      text-align: center;
+      text-decoration: none;
+      border: 3px solid var(--tiffany-blue);
+      transition: all 0.3s ease;
+    }
+
+    .rsvp-button:hover {
+      background-color: var(--tiffany-blue);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(10, 186, 181, 0.3);
+    }
+
+    @media (max-width: 576px) {
+      html, body {
+        height: auto;
+      }
+
+      .wrapper {
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .rsvp-button {
+        font-size: 1.5rem;
+        padding: 0.8rem;
+        border-width: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <a href="rsvp.html">
+      <img src="files/invitetotiffs.png" alt="Breakfast with Tiffany Invitation" class="poster" />
+    </a>
+    <a href="rsvp.html" class="rsvp-button">R.S.V.P.</a>
+  </div>
+</body>
+</html>

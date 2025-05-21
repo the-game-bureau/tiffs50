@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="files/sunglasses.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiffany Isemann's 50th</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --tiffany-blue: #0ABAB5;
+      --tiffany-light: #7BF2DA;
+      --black: #000000;
+      --white: #FFFFFF;
+      --gold: #F0B23E;
+      --blush: #F5C8C5;
+      --charcoal: #333333;
+      --cream: #FDF1DF;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Playfair Display', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      max-width: 500px;
+      width: 90%;
+      margin: 2rem auto;
+      padding: 2rem 1.5rem;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px var(--shadow);
+      border: 2px solid var(--tiffany-blue);
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    form {
+      background-color: var(--white);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--tiffany-light);
+    }
+
+    label {
+      display: block;
+      margin-top: 1.25rem;
+      font-size: 1.1rem;
+      color: var(--charcoal);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.25rem;
+      font-size: 1rem;
+      border: 1px solid var(--tiffany-light);
+      border-radius: 4px;
+      font-family: inherit;
+      background-color: var(--white);
+      color: var(--charcoal);
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--tiffany-blue);
+      box-shadow: 0 0 0 2px rgba(10, 186, 181, 0.2);
+    }
+
+    .rsvp-options {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+
+    .rsvp-options input[type="radio"] {
+      display: none;
+    }
+
+    .rsvp-options label {
+      padding: 0.75rem 1.25rem;
+      border: 2px solid var(--tiffany-blue);
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--charcoal);
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .rsvp-options input[type="radio"]:checked + label {
+      background-color: var(--tiffany-blue);
+      color: var(--white);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 2rem;
+      background-color: var(--tiffany-blue);
+      color: var(--white);
+      padding: 0.75rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .submit-button:hover {
+      background-color: #089B98;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(10, 186, 181, 0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--tiffany-blue);
+      text-align: center;
+    }
+
+    #error-message {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--white);
+      border-left: 4px solid var(--tiffany-blue);
+      color: var(--charcoal);
+      border-radius: 0 4px 4px 0;
+    }
+
+    #success-message {
+      display: none;
+      background: var(--white);
+      padding: 2rem;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid var(--tiffany-light);
+    }
+
+    #success-message h2 {
+      color: var(--charcoal);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    #success-message .button-container {
+      margin-top: 2rem;
+    }
+
+    #success-message .button-container a {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      padding: 1rem 2rem;
+      color: var(--white);
+      background-color: var(--tiffany-blue);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    #success-message .button-container a:hover {
+      background-color: #089B98;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(10, 186, 181, 0.3);
+    }
+
+    @media (max-width: 576px) {
+      .wrapper {
+        padding: 1.5rem 1rem;
+        margin: 1rem auto;
+      }
+
+      form {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .message {
+        font-size: 1.5rem;
+      }
+
+      .rsvp-options label {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <h1>RSVP to Tiffany Isemann's 50th</h1>
+
+    <form id="rsvp-form" action="https://formsubmit.co/kevinmkolb@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="RSVP for Tiffany's 50th Birthday">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://the-game-bureau.github.io/tiffs50/thank-you.html">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="formResponse" id="formResponse">
+
+      <label class="message">Might we expect you at the party, darling?</label>
+      <div class="rsvp-options">
+        <input type="radio" id="yes" name="response" value="Yes" required>
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="response" value="No">
+        <label for="no">No</label>
+      </div>
+
+      <div id="yes-message" class="message hidden">
+        Oh, how divine — you're attending!
+      </div>
+      <div id="decline-message" class="message hidden">
+        Oh, so sorry darling, we'll have a glass of champagne some other time.
+      </div>
+
+      <div id="guest-section" class="hidden">
+        <label for="guests" id="guest-label">Number of Guests</label>
+        <select id="guests" name="guests">
+          <option value="">Select...</option>
+          <option>1</option><option>2</option>
+        </select>
+        <div id="guest-names-container"></div>
+      </div>
+
+      <div id="contact-container" class="hidden">
+        <label for="contact">Phone or Email</label>
+        <input type="text" id="contact" name="contact" required>
+      </div>
+
+      <div id="note-container" class="hidden">
+        <label for="note">Message to Tiff</label>
+        <textarea id="note" name="note" rows="3"></textarea>
+      </div>
+
+      <div id="error-message"></div>
+
+      <button type="submit" id="submit-button" class="submit-button hidden">
+        R.S.V.P.
+      </button>
+    </form>
+
+    <div id="success-message">
+      <h2>Merci, darling!</h2>
+      <p>Your RSVP has been received.</p>
+      <div class="button-container">
+        <a
+          href="https://chat.openai.com/?q=Show+me+photos+of+costume+ideas+inspired+by+Breakfast+at+Tiffany's"
+          target="_blank"
+        >
+          Costume Inspiration Ideas
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const yesRadio = document.getElementById('yes');
+    const noRadio = document.getElementById('no');
+    const guestSection = document.getElementById('guest-section');
+    const guestLabel = document.getElementById('guest-label');
+    const guestSelect = document.getElementById('guests');
+    const guestNames = document.getElementById('guest-names-container');
+    const contactContainer = document.getElementById('contact-container');
+    const noteContainer = document.getElementById('note-container');
+    const yesMsg = document.getElementById('yes-message');
+    const noMsg = document.getElementById('decline-message');
+    const submitBtn = document.getElementById('submit-button');
+    const formResponse = document.getElementById('formResponse');
+    const err = document.getElementById('error-message');
+    const form = document.getElementById('rsvp-form');
+
+    function resetAll() {
+      guestLabel.classList.remove('hidden');
+      guestSelect.classList.remove('hidden');
+      guestSelect.value = '';
+      guestSection.classList.add('hidden');
+      contactContainer.classList.add('hidden');
+      noteContainer.classList.add('hidden');
+      yesMsg.classList.add('hidden');
+      noMsg.classList.add('hidden');
+      guestNames.innerHTML = '';
+      submitBtn.classList.add('hidden');
+    }
+
+    yesRadio.addEventListener('change', () => {
+      if (yesRadio.checked) {
+        resetAll();
+        guestSection.classList.remove('hidden');
+        noteContainer.classList.remove('hidden');
+        yesMsg.classList.remove('hidden');
+        submitBtn.classList.remove('hidden');
+        formResponse.value = 'Yes';
+      }
+    });
+
+    noRadio.addEventListener('change', () => {
+      if (noRadio.checked) {
+        resetAll();
+        guestLabel.classList.add('hidden');
+        guestSelect.classList.add('hidden');
+        const lbl = document.createElement('label');
+        lbl.textContent = 'Guest 1 Name';
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.name = 'guest1';
+        inp.required = true;
+        guestNames.append(lbl, inp);
+        guestSection.classList.remove('hidden');
+        contactContainer.classList.remove('hidden');
+        noteContainer.classList.remove('hidden');
+        noMsg.classList.remove('hidden');
+        submitBtn.classList.remove('hidden');
+        formResponse.value = 'No';
+      }
+    });
+
+    guestSelect.addEventListener('change', () => {
+      guestNames.innerHTML = '';
+      contactContainer.classList.add('hidden');
+      const n = parseInt(guestSelect.value);
+      if (n > 0) {
+        for (let i = 1; i <= n; i++) {
+          const lbl = document.createElement('label');
+          lbl.textContent = `Guest ${i} Name`;
+          const inp = document.createElement('input');
+          inp.type = 'text';
+          inp.name = `guest${i}`;
+          inp.required = true;
+          guestNames.append(lbl, inp);
+        }
+        contactContainer.classList.remove('hidden');
+      }
+    });
+
+    form.addEventListener('submit', e => {
+      if (!yesRadio.checked && !noRadio.checked) {
+        e.preventDefault();
+        err.textContent = 'Please select whether you will attend or not.';
+        err.style.display = 'block';
+        return;
+      }
+      if (yesRadio.checked && !guestSelect.value) {
+        e.preventDefault();
+        err.textContent = 'Please select the number of guests.';
+        err.style.display = 'block';
+        return;
+      }
+      const contactVal = document.getElementById('contact')?.value.trim() || '';
+      if (!contactContainer.classList.contains('hidden') && !contactVal) {
+        e.preventDefault();
+        err.textContent = 'Please provide your contact information.';
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      submitBtn.disabled = true;
+    });
+  </script>
+
+</body>
+</html>

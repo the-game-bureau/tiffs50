@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="files/sunglasses.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiffany Isemann's 50th</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;700&family=Bebas+Neue&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      /* Color Palette */
+      --tiffany-blue: #0ABAB5;      /* Official Tiffany Blue */
+      --tiffany-light: #7BF2DA;     /* Lighter version for accents */
+      --black: #000000;             /* Deep black */
+      --white: #FFFFFF;             /* Pure white */
+      --gold: #F0B23E;              /* Elegant gold accent */
+      --blush: #F5C8C5;             /* Soft blush pink */
+      --charcoal: #333333;          /* Dark gray for text */
+      --cream: #FDF1DF;             /* Cream background */
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .wrapper {
+      max-width: 500px;
+      width: 90%;
+      padding: 3rem 2rem;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px var(--shadow);
+      text-align: center;
+      border: 2px solid var(--tiffany-blue);
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: var(--tiffany-blue);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin: 0 auto 2rem;
+      color: var(--charcoal);
+    }
+
+    .button-container {
+      margin-top: 2.5rem;
+    }
+
+    .button-container a {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      padding: 1rem 2rem;
+      color: var(--white);
+      background-color: var(--tiffany-blue);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .button-container a:hover {
+      background-color: #089B98;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(10, 186, 181, 0.3);
+    }
+    
+    /* Media Queries for Mobile */
+    @media (max-width: 576px) {
+      .wrapper {
+        padding: 2rem 1rem;
+        width: 85%;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      p {
+        font-size: 1.3rem;
+      }
+      
+      .button-container a {
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <h1 id="thankYouHeading">Merci, darling!</h1>
+    <p id="thankYouMessage">Your RSVP has been received.</p>
+
+    <div class="button-container">
+      <a
+        href="https://chat.openai.com/?q=Show+me+photos+of+costume+ideas+inspired+by+the+movie+Breakfast+at+Tiffany%27s+including+classic+Holly+Golightly+styles+and+creative+ideas+such+as+Holly%27s+sleepwear%2C+Holly%27s+cat%2C+jewelry%2C+fashion+from+the+era+and+more+New+York+related+costume+ideas"
+        target="_blank"
+      >
+        Costume Inspiration Ideas
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Check if the user came from a form submission
+    const urlParams = new URLSearchParams(window.location.search);
+    const response = urlParams.get('response');
+    const referrer = document.referrer;
+    const isFormSubmission = referrer.includes('formsubmit.co') || 
+                            localStorage.getItem('formSubmitted') === 'true';
+    
+    // If this was not a form submission, redirect back to RSVP page
+    if (!isFormSubmission && !response) {
+      // Use a short delay to allow the user to see what's happening
+      setTimeout(() => {
+        window.location.href = 'rsvp.html';
+      }, 500);
+    } else {
+      // If it was a form submission, set local storage flag for future validation
+      localStorage.setItem('formSubmitted', 'true');
+      
+      const heading = document.getElementById('thankYouHeading');
+      const message = document.getElementById('thankYouMessage');
+
+      if (response === 'Yes') {
+        heading.textContent = 'Merci, darling!';
+        message.textContent = 'We've penciled you in — and the champagne will be chilling. Can't wait to see you at Tiffany's soirée.';
+      } else if (response === 'No') {
+        heading.textContent = 'How tragic, darling.';
+        message.textContent = 'We'll try to carry on without you, but it won't be nearly as fabulous. You'll be missed at the party.';
+      } else {
+        heading.textContent = 'Merci, darling!';
+        message.textContent = 'Your RSVP has been received.';
+      }
+    }
+  </script>
+
+</body>
+</html>
