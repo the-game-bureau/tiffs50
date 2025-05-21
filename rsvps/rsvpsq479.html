@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RSVP Responses</title>
+  <style>
+    :root {
+      --tiffany-blue: #0ABAB5;
+      --cream: #FDF1DF;
+      --white: #FFFFFF;
+      --charcoal: #333333;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --gold: #F0B23E;
+    }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'Playfair Display', serif;
+      color: var(--charcoal);
+      margin: 0;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: var(--tiffany-blue);
+    }
+
+    .stats {
+      text-align: center;
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    .rsvp-card {
+      background: var(--white);
+      border-left: 6px solid var(--tiffany-blue);
+      box-shadow: 0 4px 12px var(--shadow);
+      padding: 1rem 1.5rem;
+      margin: 1rem auto;
+      max-width: 600px;
+      border-radius: 6px;
+    }
+
+    .rsvp-entry {
+      margin: 0.25rem 0;
+      font-size: 1rem;
+    }
+
+    .rsvp-entry strong {
+      display: inline-block;
+      min-width: 110px;
+    }
+
+    .submitted {
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-top: 0.75rem;
+      text-align: right;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RSVP Responses</h1>
+  <div class="stats" id="stats">Loading stats…</div>
+  <div id="rsvp-container"></div>
+
+  <script>
+    function parseDate(str) {
+      const match = str.match(/Submitted at (.+)/i);
+      if (!match) return new Date(0);
+      return new Date(match[1]);
+    }
+
+    fetch("rsvps.xml")
+      .then(res => res.text())
+      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+      .then(data => {
+        const rsvps = data.querySelectorAll("rsvp");
+        const container = document.getElementById("rsvp-container");
+        const stats = document.getElementById("stats");
+
+        let totalGuests = 0;
+        let noCount = 0;
+        let entries = [];
+
+        rsvps.forEach(rsvp => {
+          let rsvpData = {};
+          rsvp.querySelectorAll("*").forEach(el => {
+            const key = el.tagName.trim();
+            const val = el.textContent.trim();
+            rsvpData[key] = val;
+          });
+
+          const guestCount = parseInt(rsvpData.guests || "0");
+          const response = (rsvpData.response || "").toLowerCase();
+
+          if (response === "yes") {
+            totalGuests += guestCount || 0;
+          }
+
+          if (response === "no") {
+            noCount++;
+          }
+
+          const submittedAt = rsvpData.submitted_at || "";
+          entries.push({ data: rsvpData, date: parseDate(submittedAt) });
+        });
+
+        // Sort newest to oldest
+        entries.sort((a, b) => b.date - a.date);
+
+        // Display stats
+        stats.textContent = `Total Attendees So Far: ${totalGuests}\nCan’t Attend: ${noCount}`;
+
+        // Display each RSVP
+        entries.forEach(entry => {
+          const card = document.createElement("div");
+          card.className = "rsvp-card";
+
+          Object.entries(entry.data).forEach(([key, val]) => {
+            if (key === "submitted_at") return;
+            if (key === "formResponse") return;
+            if (key === "Name" && val === "Value") return;
+
+            // Override contact fields
+            let displayVal = val;
+            if (key.toLowerCase() === 'contact') {
+              displayVal = 'ON FILE';
+            }
+
+            const div = document.createElement("div");
+            div.className = "rsvp-entry";
+            div.innerHTML = `<strong>${key}:</strong> ${displayVal}`;
+            card.appendChild(div);
+          });
+
+          if (entry.data.submitted_at) {
+            const sub = document.createElement("div");
+            sub.className = "submitted";
+            sub.textContent = entry.data.submitted_at.replace(/^Submitted at/i, "Submitted on");
+            card.appendChild(sub);
+          }
+
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        document.getElementById("stats").textContent = "Failed to load rsvps.xml.";
+        console.error("XML load error:", err);
+      });
+  </script>
+
+</body>
+</html>
